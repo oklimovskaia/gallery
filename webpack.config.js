@@ -6,28 +6,33 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
 
+    devServer: {
+        port: 9000
+    },
     entry: './gallery/main.js',
     output: {
-        filename: 'main.[contenthash].js'
+        filename: 'main.js'
     },
 
     plugins: [
-        new HtmlWebpackPlugin(),
+        new HtmlWebpackPlugin({
+            template: resolve(__dirname, 'index.html')
+        }),
         new MiniCssExtractPlugin({
-            filename: '[name].[contenthash].css'
+            filename: '[name].css'
         }),
     ],
     module: {
         rules: [{
-                test: /\\.(png|jpe?g|gif|mp3)$/i,
+                test: /\.(png|jpe?g|gif|mp3)$/i,
                 use: 'file-loader'
             },
             {
-                test: /\\.css$/,
+                test: /\.css$/,
                 use: [MiniCssExtractPlugin.loader, 'css-loader']
             },
             {
-                test: /\\.s[ac]ss$/i,
+                test: /\.s[ac]ss$/i,
                 use: [
                     MiniCssExtractPlugin.loader,
                     'css-loader',
